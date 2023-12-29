@@ -1,0 +1,16 @@
+{
+    "name": "HausWetter",
+    "short_name": "HausWetter",
+    "icons": [
+        {
+            "src": "/src/icons/favicons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#f8f0ff",
+    "background_color": "#f8f0ff",
+    "start_url": "https://govno.com/",
+    "display": "standalone",
+    "orientation": "portrait"
+}
