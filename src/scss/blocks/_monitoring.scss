@@ -1,0 +1,22 @@
+.list_values {
+    list-style-type: none;
+    padding: 0;
+    li {
+        transition: all 1s;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column-reverse;
+        border: 3px solid $main-purple;
+        border-radius: 15px;
+        padding: 10px;
+        .value-margin {
+            margin-bottom: 5px;
+            font-weight: 500;
+            color:black;
+        }
+        div {
+            font-weight: 400;
+            color: gray;
+        }
+    }
+}

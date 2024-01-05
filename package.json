@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "jshint": "^2.13.6",
+    "mqtt": "^5.3.4"
+  }
+}

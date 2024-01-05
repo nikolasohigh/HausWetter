@@ -1,0 +1,39 @@
+$main-purple: #8C82FD;
+$brown: #D5CABD;
+$background-color: #F8F0FF;
+$secondary-purple: #938BB7;
+
+$desktop-header-fz: 40px;
+$large-phone-header-fz: 27px;
+$middle-phone-header-fz: 24px;
+$small-phone-header-fz: 17px;
+
+$big-menu-fz: 30px;
+$middle-menu-fz: 20px;
+$small-menu-fz: 18px;
+
+body {
+    background-color: $background-color;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@import "./blocks/footer.scss";
+@import "./blocks/header.scss";
+@import "./blocks/gui.scss";
+@import "./blocks/monitoring.scss";
