@@ -1,11 +1,11 @@
 let activePage = null;
 
-const options = {
+let options = {
     defaultPage: 1,
     urlMQTT: 'https://corsproxy.io/?https://dev.rightech.io/api/v1/objects/mqtt-kolya_bondar_yt-3f68k5',
     apiKeyMQTT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2NTg1MzFlOTk2YmE1ZjY2ZTBhNDk0NTAiLCJzdWIiOiI2NTgwY2YzYmE2OWI2MTJmNmE1YjUzNGIiLCJncnAiOiI2NTgwY2YzYmE2OWI2MTJmNmE1YjUzNGEiLCJvcmciOiI2NTgwY2YzYmE2OWI2MTJmNmE1YjUzNGEiLCJsaWMiOiI1ZDNiNWZmMDBhMGE3ZjMwYjY5NWFmZTMiLCJ1c2ciOiJhcGkiLCJmdWxsIjpmYWxzZSwicmlnaHRzIjoxLjUsImlhdCI6MTcwMzIyNzg4MSwiZXhwIjoyMjEwNzEzMjAwfQ.TwTeKWAZtS9LEvo0N8ESuh6AXeoVayiWLG6QmGnXhVM',
     apiKeyWeather: 'GCS3qGbShGtrGN3opAK1SfaIdob7awdI',
-    
+    locationKey: null
   }
 
   const espValues = {
@@ -15,13 +15,23 @@ const options = {
     pressure: 0,
     ppm: 0
   }
-  const wrapper = document.getElementById('main'),
+
+
+  function saveOptions() {
+    localStorage.setItem('data', JSON.stringify(options));
+  }
+
+  function loadOptions() {
+    options = JSON.parse(localStorage.getItem('data'));
+  }
+
+  const wrapper           = document.getElementById('main'),
         monitoringButtons = document.querySelectorAll('.monitoring'),
-        statsButtons = document.querySelectorAll('.stats'),
-        weatherButtons = document.querySelectorAll('.weather'),
-        notifiesButtons = document.querySelectorAll('.notifies'),
-        optionsButtons = document.querySelectorAll('.options'),
-        guiButtons = document.querySelectorAll('.menu_item');
+        statsButtons      = document.querySelectorAll('.stats'),
+        weatherButtons    = document.querySelectorAll('.weather'),
+        notifiesButtons   = document.querySelectorAll('.notifies'),
+        optionsButtons    = document.querySelectorAll('.options'),
+        guiButtons        = document.querySelectorAll('.menu_item');
 
 
   monitoringButtons.forEach(button => {
@@ -73,8 +83,6 @@ const options = {
       }
     })
   });
-
-
 
   //обработка полосочки над кнопками
   guiButtons.forEach(button => {
