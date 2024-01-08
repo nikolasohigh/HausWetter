@@ -1,4 +1,4 @@
-const listOfCards     = document.createElement('ul'),
+const listOfCards     = document.createElement('div'),
       statusCard      = document.createElement('li'),
       temperatureCard = document.createElement('li'),
       humidityCard    = document.createElement('li'),

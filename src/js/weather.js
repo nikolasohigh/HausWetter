@@ -9,7 +9,7 @@ let latitude, longitude;
 */
 
 
-function getLocation() {
+function getGeoLocation() {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(
       function(position) {
@@ -42,25 +42,28 @@ function getLocation() {
     }
 }
 
-function getLocationKey() {
+function getLocation() {
 fetch(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${options.apiKeyWeather}&q=${latitude}%2C%20${longitude}`)
   .then(response => response.json())
   .then(data => {
+    console.log(data);
     options.locationKey = data.Key;
+    options.city = data.LocalizedName;
     console.log(options.locationKey);
+    console.log(options.city);
   })
   .catch(error => {
     console.error('Произошла ошибка:', error);
   })
 }
 
-function getFiveDaysWeather() {
-  fetch(`http://dataservice.accuweather.com//forecasts/v1/daily/5day/${options.locationKey}?apikey=${options.apiKeyWeather}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Произошла ошибка:', error);
-    })
-  } 
+  function getFiveDaysWeather() {
+    fetch(`http://dataservice.accuweather.com//forecasts/v1/daily/5day/${options.locationKey}?apikey=${options.apiKeyWeather}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Произошла ошибка:', error);
+      })
+    } 
