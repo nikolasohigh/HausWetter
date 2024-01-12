@@ -1,3 +1,6 @@
+const wrapper = document.getElementById('main');
+const date = new Date();
+
 let userPosition = {
   isDownloaded: false,
   locationKey: null,
@@ -5,7 +8,6 @@ let userPosition = {
   longitude: null,
   latitude: null
 }
-
 
 let options = {
   isDownloaded: false,
@@ -22,10 +24,18 @@ const espValues = {
   ppm: 0
 }
 
-const wrapper = document.getElementById('main');
+const currentState = {
+  ico: null,
+  state: null,
+  temperature: null
+}
+
+let hourlyForecast = []
+
 
 
 function saveOptions(key, obj) {
   console.log(`saving: ${key} - ${obj}`);
   localStorage.setItem(`${key}`, JSON.stringify(obj));
 }
+

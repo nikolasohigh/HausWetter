@@ -1,56 +1,44 @@
-//weather wrapper init
-const weatherWrapper = document.createElement('div');
+//init and build header
+const weatherWrapper    = document.createElement('div'),
+      weatherTime       = document.createElement('div'),
+      weatherCity       = document.createElement('div'),
+      weatherState      = document.createElement('div'),
+      weatherTemp       = document.createElement('div'),
+      backgroundImage   = document.createElement('img'),
+      weatherStatusbar  = document.createElement('div');
+
       weatherWrapper.classList.add('weather__wrapper');
-
-//weather wrapper build
-wrapper.appendChild(weatherWrapper);
-
-//build background images
-const backgroundImage = document.createElement('img');
       backgroundImage.classList.add('background__img');
-//init and build statusbar
-const weatherStatusbar = document.createElement('div');
       weatherStatusbar.classList.add('weather__statusbar');
-      weatherWrapper.appendChild(weatherStatusbar);
-
-//init and build statusbar data
-const weatherTime  = document.createElement('div'),
-      weatherCity  = document.createElement('div'),
-      weatherState = document.createElement('div'),
-      weatherTemp  = document.createElement('div');
-      //classes
       weatherTime.classList.add('weather__time');
       weatherCity.classList.add('weather__city');
       weatherState.classList.add('weather__state');
       weatherTemp.classList.add('weather__temperature');
-      //build
-    weatherStatusbar.appendChild(weatherTime);
-    weatherStatusbar.appendChild(weatherCity);
-    weatherStatusbar.appendChild(weatherState);
-    weatherStatusbar.appendChild(weatherTemp);
+
+      wrapper.appendChild(weatherWrapper);
+      weatherWrapper.appendChild(weatherStatusbar);
+      weatherStatusbar.appendChild(weatherTime);
+      weatherStatusbar.appendChild(weatherCity);
+      weatherStatusbar.appendChild(weatherState);
+      weatherStatusbar.appendChild(weatherTemp);
+
+//init and build forecasts wrapper
+const forecastsWrapper = document.createElement('div');
+      forecastsWrapper.classList.add('forecasts');
+      weatherWrapper.appendChild(forecastsWrapper);
+
+//carousel init and build
+ const weatherCarousel = document.createElement('div');
+       weatherCarousel.classList.add('weather__carousel');
+       forecastsWrapper.appendChild(weatherCarousel);
+        
+
 
 //geo-update by click
 weatherCity.addEventListener('click', ()=>{
   console.log('reupdate');
   getGeoLocation();
 })
-
-
-function initMainSlider() {
-  $('.main').slick({
-    infinite: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
- }); 
-}
-const currentState = {
-  ico: null,
-  state: null,
-  temperature: null
-}
-
-const date = new Date();
 
 // $(document).ready(function(){
 //     $('.weather__carousel').slick({
@@ -92,13 +80,15 @@ startApp();
 function startApp() {
     timeUpdate();
     if (localStorage.getItem('userPosition') != null || localStorage.getItem('userPosition') != undefined) {
-        userPosition = JSON.parse(localStorage.getItem('userPosition'));
-        userPosition.isDownloaded = true;
-        showCity();
-        getCurrentState(showCurrentState);
+      userPosition = JSON.parse(localStorage.getItem('userPosition'));
+      userPosition.isDownloaded = true;
+      showCity();
+      getCurrentState(showCurrentState);
+      getTwelweHoursForecast(initCarousel);
     } else {
-        getGeoLocation();
-        getCurrentState(showCurrentState);
+      getGeoLocation();
+      getCurrentState(showCurrentState);
+      getTwelweHoursForecast(initCarousel);
     }
 }
 
@@ -147,7 +137,7 @@ function toCelcium(temperatureF) {
   return Math.round((temperatureF-32)*(5/9));
 }
 
-async function getTwelweHoursForecast() {
+async function getTwelweHoursForecast(callback) {
     try {
       const response = await fetch(`https://corsproxy.io/?https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/167753?apikey=${options.apiKeyWeather}&language=uk-ua`); 
       if (!response.ok) {
@@ -155,12 +145,19 @@ async function getTwelweHoursForecast() {
       }
   
       const data = await response.json();
-  
-      console.log(data);
+      data.forEach((element, index) => {
+        const hour = {
+          time: (date.getHours()+index+1) >= 24 ? (date.getHours()+index-24+1)+ ":00" : (date.getHours()+index+1) + ":00",
+          icon: element.WeatherIcon,
+          temperature: toCelcium(element.Temperature.Value)
+        }
+        hourlyForecast.push(hour);
+      })
 
     } catch (error) {
       console.error('Произошла ошибка:', error);
     }
+    callback();
 }
 
 async function getCity(callback) {
@@ -175,10 +172,10 @@ async function getCity(callback) {
     console.log(userPosition.locationKey);
     console.log(userPosition.city);
     console.log(data);
-    callback();
   } catch (error) {
     console.error('Произошла ошибка:', error);
   }
+  callback();
   saveOptions('userPosition', userPosition);
 }
 
@@ -210,8 +207,48 @@ function showCurrentState() {
 
   if (currentState.temperature < 0) {
     weatherTemp.classList.add('big_minus');
-    weatherTemp.textContent = Math.abs(currentState.temperature);
+    weatherTemp.textContent = Math.round(Math.abs(currentState.temperature));
   } else {
-    weatherTemp.textContent = currentState.temperature;
+    weatherTemp.textContent = Math.round(currentState.temperature);
   }
+}
+
+function initCarousel() {
+  hourlyForecast.forEach((element) => {
+    weatherCarousel.innerHTML += `
+    <div class="weather__carousel-item">
+      <div class="weather__carousel-item__time">${element.time}</div>
+      <div class="weather__carousel-item__ico"><img src="src/icons/weather/${element.icon}.svg" alt="ico" class="weather__carousel-item__ico-img"></div>
+      <div class="weather__carousel-item__temperature ${element.temperature < 0 ? "small_minus" : ""}">${element.temperature}</div>
+    </div>`;
+  });
+  $('.weather__carousel').slick({
+    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 1111,
+    swipe: false,
+    responsive: [
+    {
+      breakpoint: 1500,
+      settings: {
+        slidesToShow: 6
+      }
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4
+      }
+    },
+    {
+      breakpoint: 500,
+      settings: {
+        slidesToShow: 2
+      }
+    }
+    ]
+ });
 }

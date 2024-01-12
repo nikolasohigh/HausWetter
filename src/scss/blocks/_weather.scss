@@ -9,6 +9,17 @@
     }
 }
 
+.small_minus {
+    &::before {
+        content: '-';
+        position: absolute;
+        font-weight: 500;
+        font-size: 10px;
+        margin-top: 5px;
+        margin-left: -5px;
+        
+    }
+}
 
 .weather {
     &__wrapper{
@@ -95,15 +106,7 @@
                     margin-top: 2px;
                     margin-left: 1px;
                 }
-                &::before {
-                    content: '-';
-                    position: absolute;
-                    font-weight: 500;
-                    font-size: 10px;
-                    margin-top: 5px;
-                    margin-left: -5px;
-                    
-                }
+                
             }
         }
     }
