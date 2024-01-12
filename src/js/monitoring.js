@@ -13,12 +13,10 @@ function getState() {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', options.urlMQTT);
   xhr.setRequestHeader('Authorization', options.apiKeyMQTT);
-
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       switch (xhr.status) {
         case 200:
-          //console.log(xhr.responseText);
           getValues(xhr.responseText, showValues);
           console.log('Succes');
           break;
