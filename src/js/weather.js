@@ -172,7 +172,7 @@ async function getCurrentState(callback) {
 
 async function getFiveDaysForecast(callback) {
   try {
-    const response = await fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
+    const response = await fetch(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
     if (!response.ok) {
       throw new Error('Network response was not ok.');
     }

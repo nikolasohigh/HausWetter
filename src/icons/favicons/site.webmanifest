@@ -3,14 +3,19 @@
     "short_name": "HausWetter",
     "icons": [
         {
-            "src": "/src/icons/favicons/android-chrome-192x192.png",
+            "src": "android-chrome-192x192.png",
             "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "android-chrome-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "theme_color": "#f8f0ff",
-    "background_color": "#f8f0ff",
-    "start_url": "https://govno.com/",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "start_url": "https://nikolasohigh.github.io/HausWetter/",
     "display": "standalone",
     "orientation": "portrait"
 }
