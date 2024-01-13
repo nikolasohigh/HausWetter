@@ -1,11 +1,17 @@
-//init and build header
-const weatherWrapper    = document.createElement('div'),
-      weatherTime       = document.createElement('div'),
-      weatherCity       = document.createElement('div'),
-      weatherState      = document.createElement('div'),
-      weatherTemp       = document.createElement('div'),
-      backgroundImage   = document.createElement('img'),
-      weatherStatusbar  = document.createElement('div');
+const weatherWrapper          = document.createElement('div'),
+      weatherTime             = document.createElement('div'),
+      weatherCity             = document.createElement('div'),
+      weatherState            = document.createElement('div'),
+      weatherTemp             = document.createElement('div'),
+      backgroundImage         = document.createElement('img'),
+      weatherStatusbar        = document.createElement('div'),
+      forecastsWrapper        = document.createElement('div'),
+      weatherCarousel         = document.createElement('div'),
+      dailyForecastWrapper    = document.createElement('div'),
+      dailyForecastImage      = document.createElement('img'),
+      dailyForecastHeader     = document.createElement('div'),
+      dailyForecastHeaderText = document.createElement('div'),
+      dailyForecastList       = document.createElement('ul');
 
       weatherWrapper.classList.add('weather__wrapper');
       backgroundImage.classList.add('background__img');
@@ -14,6 +20,13 @@ const weatherWrapper    = document.createElement('div'),
       weatherCity.classList.add('weather__city');
       weatherState.classList.add('weather__state');
       weatherTemp.classList.add('weather__temperature');
+      forecastsWrapper.classList.add('forecasts');
+      weatherCarousel.classList.add('weather__carousel');
+      dailyForecastWrapper.classList.add('forecast');
+      dailyForecastImage.classList.add('forecast__header-img');
+      dailyForecastHeader.classList.add('forecast__header');
+      dailyForecastHeaderText.classList.add('forecast__header-text');
+      dailyForecastList.classList.add('forecast__list');
 
       wrapper.appendChild(weatherWrapper);
       weatherWrapper.appendChild(weatherStatusbar);
@@ -21,35 +34,14 @@ const weatherWrapper    = document.createElement('div'),
       weatherStatusbar.appendChild(weatherCity);
       weatherStatusbar.appendChild(weatherState);
       weatherStatusbar.appendChild(weatherTemp);
-
-//init and build forecasts wrapper
-const forecastsWrapper = document.createElement('div'),
-      weatherCarousel = document.createElement('div');
-
-      forecastsWrapper.classList.add('forecasts');
-      weatherCarousel.classList.add('weather__carousel');
-
       weatherWrapper.appendChild(forecastsWrapper);
       forecastsWrapper.appendChild(weatherCarousel);
-        
-const dailyForecastWrapper = document.createElement('div'),
-      dailyForecastImage = document.createElement('img'),
-      dailyForecastHeader = document.createElement('div'),
-      dailyForecastHeaderText = document.createElement('div'),
-      dailyForecastList = document.createElement('ul');
-      
-      dailyForecastWrapper.classList.add('forecast');
-      dailyForecastImage.classList.add('forecast__header-img');
-      dailyForecastHeader.classList.add('forecast__header');
-      dailyForecastHeaderText.classList.add('forecast__header-text');
-      dailyForecastList.classList.add('forecast__list');
-
       dailyForecastHeader.appendChild(dailyForecastImage);
       dailyForecastHeader.appendChild(dailyForecastHeaderText);
       dailyForecastWrapper.appendChild(dailyForecastHeader);
       dailyForecastWrapper.appendChild(dailyForecastList);
       forecastsWrapper.appendChild(dailyForecastWrapper);
-      
+
       dailyForecastImage.src = 'src/icons/ui/calendar.svg';
       dailyForecastHeaderText.textContent = 'Прогноз на 5 наступних днiв';
       
@@ -59,9 +51,9 @@ weatherCity.addEventListener('click', ()=>{
   getGeoLocation();
 })
 
-startApp();
+startWeatherApp();
 
-function startApp() {
+function startWeatherApp() {
     timeUpdate();
     if (localStorage.getItem('userPosition') != null || localStorage.getItem('userPosition') != undefined) {
       userPosition = JSON.parse(localStorage.getItem('userPosition'));
@@ -69,10 +61,12 @@ function startApp() {
       showCity();
       getCurrentState(showCurrentState);
       getTwelweHoursForecast(initCarousel);
+      getFiveDaysForecast(initDailyForecast)
     } else {
       getGeoLocation();
       getCurrentState(showCurrentState);
       getTwelweHoursForecast(initCarousel);
+      getFiveDaysForecast(initDailyForecast)
     }
 }
 
@@ -117,9 +111,6 @@ function showCity() {
   weatherCity.textContent = userPosition.city;
 }
 
-function toCelcium(temperatureF) {
-  return Math.round((temperatureF-32)*(5/9));
-}
 
 async function getTwelweHoursForecast(callback) {
     try {
@@ -170,10 +161,38 @@ async function getCurrentState(callback) {
       throw new Error('Network response was not ok.');
     }
     const data = await response.json();
-      console.log(data);
       currentState.ico = data[0].WeatherIcon;
       currentState.state = data[0].WeatherText;
       currentState.temperature = data[0].Temperature.Metric.Value;
+    callback();
+  } catch (error) {
+    console.error('Произошла ошибка:', error);
+  }
+}
+
+async function getFiveDaysForecast(callback) {
+  try {
+    const response = await fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+    const data = await response.json();
+      data.DailyForecasts.forEach((element) => {
+        const inputDateString = element.Date;
+        const inputDate = new Date(inputDateString);
+        const day = inputDate.getDate();
+        const month = inputDate.getMonth() + 1; 
+
+        const forecast = {
+          date: `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}`,
+          ico: element.Day.Icon,
+          state: element.Day.IconPhrase,
+          maximum: toCelcium(element.Temperature.Maximum.Value),
+          minimum: toCelcium(element.Temperature.Minimum.Value)
+        }
+
+        dailyForecast.push(forecast);
+      });
     
     callback();
   } catch (error) {
@@ -184,10 +203,7 @@ async function getCurrentState(callback) {
 function showCurrentState() {
   weatherState.textContent = currentState.state;
   backgroundImage.src = `src/icons/weather/${currentState.ico}.svg`;
-  for(let i = 0; i < 3; i++) {
-    const copy = backgroundImage.cloneNode(true);
-    weatherWrapper.prepend(copy);
-  }
+  weatherWrapper.prepend(backgroundImage);
 
   if (currentState.temperature < 0) {
     weatherTemp.classList.add('big_minus');
@@ -235,4 +251,18 @@ function initCarousel() {
     }
     ]
  });
+}
+
+function initDailyForecast() {
+  dailyForecast.forEach((element) => {
+    dailyForecastList.innerHTML += `
+    <li class="forecast__list-item">
+      <div class="forecast__date">${element.date}</div>
+      <div class="forecast__state">${element.state}</div>
+      <div class="forecast__temperatures">
+          <div class="forecast__maximum ${element.maximum < 0 ? "small_minus" : ""}">${Math.abs(element.maximum)}</div>
+          <div class="forecast__minimum ${element.minimum < 0 ? "small_minus" : ""}">${Math.abs(element.minimum)}</div>
+      </div>
+    </li>
+    `});
 }

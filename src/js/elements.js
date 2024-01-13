@@ -30,9 +30,12 @@ const currentState = {
   temperature: null
 }
 
-let hourlyForecast = []
+let hourlyForecast = [];
+let dailyForecast = [];
 
-
+function toCelcium(temperatureF) {
+  return Math.round((temperatureF-32)*(5/9));
+}
 
 function saveOptions(key, obj) {
   console.log(`saving: ${key} - ${obj}`);
