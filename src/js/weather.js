@@ -23,57 +23,41 @@ const weatherWrapper    = document.createElement('div'),
       weatherStatusbar.appendChild(weatherTemp);
 
 //init and build forecasts wrapper
-const forecastsWrapper = document.createElement('div');
+const forecastsWrapper = document.createElement('div'),
+      weatherCarousel = document.createElement('div');
+
       forecastsWrapper.classList.add('forecasts');
+      weatherCarousel.classList.add('weather__carousel');
+
       weatherWrapper.appendChild(forecastsWrapper);
-
-//carousel init and build
- const weatherCarousel = document.createElement('div');
-       weatherCarousel.classList.add('weather__carousel');
-       forecastsWrapper.appendChild(weatherCarousel);
+      forecastsWrapper.appendChild(weatherCarousel);
         
+const dailyForecastWrapper = document.createElement('div'),
+      dailyForecastImage = document.createElement('img'),
+      dailyForecastHeader = document.createElement('div'),
+      dailyForecastHeaderText = document.createElement('div'),
+      dailyForecastList = document.createElement('ul');
+      
+      dailyForecastWrapper.classList.add('forecast');
+      dailyForecastImage.classList.add('forecast__header-img');
+      dailyForecastHeader.classList.add('forecast__header');
+      dailyForecastHeaderText.classList.add('forecast__header-text');
+      dailyForecastList.classList.add('forecast__list');
 
-
+      dailyForecastHeader.appendChild(dailyForecastImage);
+      dailyForecastHeader.appendChild(dailyForecastHeaderText);
+      dailyForecastWrapper.appendChild(dailyForecastHeader);
+      dailyForecastWrapper.appendChild(dailyForecastList);
+      forecastsWrapper.appendChild(dailyForecastWrapper);
+      
+      dailyForecastImage.src = 'src/icons/ui/calendar.svg';
+      dailyForecastHeaderText.textContent = 'Прогноз на 5 наступних днiв';
+      
 //geo-update by click
 weatherCity.addEventListener('click', ()=>{
   console.log('reupdate');
   getGeoLocation();
 })
-
-// $(document).ready(function(){
-//     $('.weather__carousel').slick({
-//        infinite: true,
-//        slidesToShow: 5,
-//        slidesToScroll: 1,
-//        arrows: false,
-//        autoplay: true,
-//        autoplaySpeed: 1111,
-//        swipe: false,
-//        responsive: [
-//         {
-//           breakpoint: 1024,
-//           settings: {
-//             slidesToShow: 4
-//           }
-//         },
-//         {
-//           breakpoint: 500,
-//           settings: {
-//             slidesToShow: 2
-//           }
-//         }
-//        ]
-//     })
-
-//     $('.main').slick({
-//        infinite: false,
-//        slidesToShow: 1,
-//        slidesToScroll: 1,
-//        arrows: false,
-//     });   
-// });
-
-//startApp();
 
 startApp();
 
