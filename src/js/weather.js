@@ -137,7 +137,7 @@ async function getTwelweHoursForecast(callback) {
 
 async function getCity(callback) {
   try {
-    const response = await fetch(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${options.apiKeyWeather}&q=${userPosition.latitude},${userPosition.longitude}`); 
+    const response = await fetch(`https://corsproxy.io/?https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${options.apiKeyWeather}&q=${userPosition.latitude},${userPosition.longitude}`); 
     if (!response.ok) {
       throw new Error('Network response was not ok.');
     }
@@ -156,7 +156,7 @@ async function getCity(callback) {
 
 async function getCurrentState(callback) {
   try {
-    const response = await fetch(`https://dataservice.accuweather.com/currentconditions/v1/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
+    const response = await fetch(`https://corsproxy.io/?https://dataservice.accuweather.com/currentconditions/v1/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
     if (!response.ok) {
       throw new Error('Network response was not ok.');
     }
@@ -172,7 +172,7 @@ async function getCurrentState(callback) {
 
 async function getFiveDaysForecast(callback) {
   try {
-    const response = await fetch(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
+    const response = await fetch(`https://corsproxy.io/?https://dataservice.accuweather.com/forecasts/v1/daily/5day/${userPosition.locationKey}?apikey=${options.apiKeyWeather}&language=uk-ua`); 
     if (!response.ok) {
       throw new Error('Network response was not ok.');
     }
