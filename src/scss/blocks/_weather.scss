@@ -210,15 +210,6 @@
     min-height: 100vh;
 }
 
-@media (max-width: 450px) {
-    .forecast {
-        padding: 5px;
-        &__date {
-            margin-right: 10px;
-        }
-    }
-    
-}
 .background__img {
     width: 600px;
     height: 400px;
@@ -258,6 +249,26 @@
     }
 }
 
+@media (max-width: 570px) {
+    .weather__city {
+        font-size: 35px;
+        &::after {
+            height: 27px;
+            width: 27px;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .forecast {
+        padding: 5px;
+        &__date {
+            margin-right: 10px;
+        }
+    }
+    
+}
+
 @media (max-width: 425px) {
    .forecast__header-text {
     font-size: 12px;
@@ -276,5 +287,23 @@
         height: 200px;
         top: 0px;
         left: -10px;
+    }
+
+    .weather__city {
+        font-size: 30px;
+        &::after {
+            height: 25px;
+            width: 25px;
+        }
+    }
+}
+
+@media (max-width: 350px) {
+    .weather__city {
+        font-size: 25px;
+        &::after {
+            height: 22px;
+            width: 22px;
+        }
     }
 }

@@ -44,7 +44,8 @@ const weatherWrapper          = document.createElement('div'),
 
       dailyForecastImage.src = 'src/icons/ui/calendar.svg';
       dailyForecastHeaderText.textContent = 'Прогноз на 5 наступних днiв';
-      
+      weatherTemp.textContent = '0';
+      weatherState.textContent = 'Підключення';
 //geo-update by click
 weatherCity.addEventListener('click', ()=>{
   console.log('reupdate');
@@ -86,18 +87,18 @@ function getGeoLocation() {
         },
         function(error) {
           switch (error.code) {
-          case error.PERMISSION_DENIED:
-            console.error('Пользователь отказал в доступе к местоположению');
-            break;
-          case error.POSITION_UNAVAILABLE:
-            console.error('Информация о местоположении недоступна');
-            break;
-          case error.TIMEOUT:
-            console.error('Время ожидания запроса истекло');
-            break;
-          case error.UNKNOWN_ERROR:
-            console.error('Произошла неизвестная ошибка');
-            break;
+            case error.PERMISSION_DENIED:
+              weatherState.textContent = 'Відмова у доступі';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              weatherState.textContent = 'Інформація про місцезнаходження недоступна';
+              break;
+            case error.TIMEOUT:
+              weatherState.textContent = 'Час запиту закінчився';
+              break;
+            case error.UNKNOWN_ERROR:
+              weatherState.textContent = 'Відбулась невідома помилка';
+              break;
           }
         }
       )
