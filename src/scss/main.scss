@@ -1,5 +1,8 @@
 $black-color: #0C0C0C;
 
+* {
+    box-sizing: border-box;
+}
 
 body, html, main {
     font-family: 'Montserrat', sans-serif;
@@ -13,3 +16,4 @@ body, html, main {
 
 
 @import "./blocks/weather.scss";
+@import "./blocks/welcomeScreen.scss";
