@@ -1,5 +1,8 @@
 $black-color: #0C0C0C;
 
+* {
+    box-sizing: border-box;
+}
 
 body, html, main {
     font-family: 'Montserrat', sans-serif;
@@ -8,8 +11,9 @@ body, html, main {
     padding: 0;
     min-width: 100vw;
     min-height: 100vh;
-    overflow: hidden; 
+    //overflow: hidden; 
 }
 
 
-@import "./blocks/weather.scss";
+@import "./blocks/charts.scss";
+@import "./blocks/welcomeScreen.scss";

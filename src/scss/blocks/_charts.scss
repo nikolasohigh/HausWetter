@@ -1,0 +1,27 @@
+.chart__wrapper {
+    //overflow: hidden;
+    text-align: center;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+
+//заголовок
+.chart__wrapper h3 { 
+    font-size: 40px;
+}
+
+.chart__wrapper iframe {
+    width: 446px;
+    height: 234px;
+    border: 2px black solid;
+    border-radius: 20px;
+}
+
+@media (max-width: 600px) {
+    .chart__wrapper iframe {
+        position: relative;
+        left: -2%;
+        transform: scale(0.95);
+    }
+  }
