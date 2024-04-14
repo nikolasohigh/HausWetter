@@ -23,14 +23,21 @@ function saveOptions(key, obj) {
   localStorage.setItem(`${key}`, JSON.stringify(obj));
 }
 
+function loadOptions(key, obj) {
+  console.log(`loading: ${key} - ${obj}`);
+  Object.assign(obj, JSON.parse(localStorage.getItem(key)));
+}
+
 function startApp() {
-  buildMonitoring();
-  buildStatistic();
+  console.log('starting app');
+  loadOptions('loginData', loginData);
   initSwipeMenu();
+  sendRequest();
 }
 
 
 function initSwipeMenu() {
+  console.log('initialize slick');
   $('.main').slick({
     infinite: false,
     slidesToShow: 1,
@@ -38,6 +45,5 @@ function initSwipeMenu() {
     arrows: false,
     autoplay: false,
     swipe: true
-
  });
 }

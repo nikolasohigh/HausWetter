@@ -10,7 +10,6 @@ const loginForm         = document.createElement('form'),
       tip               = document.createElement('div'),
       welcomeButton     = document.createElement('button');
       
-      wrapper.classList.add('center');
       welcomeHeader.classList.add('login__header');
       loginForm.classList.add('login-form');
       apiLabel.classList.add('login-label', 'api-label');
@@ -33,17 +32,6 @@ const loginForm         = document.createElement('form'),
 
       rememberCheckbox.type = 'checkbox';
       
-
-
-      if (localStorage.getItem('loginData') == null) {
-        login();
-      } else {
-        startApp();
-      }
-
-
-
-
       apiInput.addEventListener('input', () => {
         checkWelcomeButton();
         if (apiInput.value == '') {
@@ -68,7 +56,7 @@ const loginForm         = document.createElement('form'),
 
       help.addEventListener('click', () => {
         tip.style.zIndex = '999';
-        tip.textContent = 'wallah mudila bomba putin allah babahwallah mudila bomba putin allah babahwallah mudila bomba putin allah babah';
+        tip.innerHTML = `<br> <br> У поле 'API Key' необхідно вести API READ ключ з сайту thingspeak.com <br> <br> <br> У поле 'ID каналу' необхідно вести ідентифікатор каналу, з якого необхідно дивитись інформацію`;
       });
 
       tip.addEventListener('click', () => {
@@ -81,12 +69,10 @@ const loginForm         = document.createElement('form'),
         wrapper.classList.remove('center');
         loginData.api     = apiInput.value;
         loginData.channel = channelIdInput.value;
-
         if (rememberCheckbox.checked) {
             loginData.isRemembered = true;
             saveOptions('loginData', loginData);
         }
-
         startApp();
       });
 
@@ -106,6 +92,7 @@ const loginForm         = document.createElement('form'),
       }
 
       function login() {
+        wrapper.classList.add('center');
         wrapper.appendChild(loginForm);
         wrapper.appendChild(tip);
         loginForm.appendChild(welcomeHeader);
@@ -120,4 +107,8 @@ const loginForm         = document.createElement('form'),
         checkWelcomeButton();
       }
 
-
+      if (localStorage.getItem('loginData') == null) {
+        login();
+      } else {
+        startApp();
+      }

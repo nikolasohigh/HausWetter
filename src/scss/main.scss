@@ -11,9 +11,9 @@ body, html, main {
     padding: 0;
     min-width: 100vw;
     min-height: 100vh;
-    overflow: hidden; 
+    //overflow: hidden; 
 }
 
 
-@import "./blocks/weather.scss";
+@import "./blocks/charts.scss";
 @import "./blocks/welcomeScreen.scss";
