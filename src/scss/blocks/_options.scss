@@ -1,0 +1,76 @@
+.options-button, .logout-button {
+    position: absolute;
+    bottom: 30px;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.logout-button {
+    right: 30px;
+}
+
+.options-button {
+    left: 30px;
+}
+
+.modal-exit {
+    transition: all .5s;
+    padding: 0 35px;
+    text-align: center;
+    border-radius: 50px 50px 0 0;
+    border: solid 3px $light-color;
+    border-bottom: none;
+    width: 400px;
+    height: 140px;
+    background-color: $secondary-color;
+    position: absolute;
+    bottom: -140px;
+    left: calc(50% - 200px);
+}
+
+.modal-exit h5 {
+    color: $text-color;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.modal-exit div {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.modal-exit button {
+    text-align: center;
+    height: 35px;
+    width: 130px;
+    border: 3px solid $light-color;
+    background-color: $secondary-color;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $light-color;
+    cursor: pointer;
+    transition: all .3s;
+    
+}
+
+.modal-exit button:hover {
+    color: $text-color;
+    background-color: $light-color;
+}
+
+.modal-options {
+    width: 90%;
+    height: 90%;
+    border-radius: 35px;
+    border: 2px solid $light-color;
+    background-color: $secondary-color;
+    position: absolute;
+    bottom: calc((100% - 90%) / 2);
+    left: calc((100% - 90%) / 2);
+    box-shadow: 0px 0px 600px 600px $background-color;
+}
