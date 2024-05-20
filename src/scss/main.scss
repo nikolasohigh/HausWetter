@@ -1,19 +1,36 @@
 $black-color: #0C0C0C;
+$background-color: #222831;
+$light-color: #00ADB5;
+$secondary-color: #393E46;
+$text-color: #EEEEEE;
 
 * {
     box-sizing: border-box;
 }
 
 body, html, main {
+    overflow: hidden;
+    position: relative;
+    color: $text-color;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     margin: 0;
     padding: 0;
     min-width: 100vw;
     min-height: 100vh;
-    //overflow: hidden; 
+    background-color: $background-color;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
 @import "./blocks/charts.scss";
 @import "./blocks/welcomeScreen.scss";
+@import "./blocks/options.scss";

@@ -1,14 +1,21 @@
 .chart__wrapper {
-    //overflow: hidden;
-    text-align: center;
+    color: $text-color;
     min-width: 100vw;
     min-height: 100vh;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
 }
 
 
 //заголовок
-.chart__wrapper h3 { 
+.chart__wrapper h3 {
+    color: $text-color; 
     font-size: 40px;
+}
+
+.chart__wrapper {
+    color: $text-color;
 }
 
 .chart__wrapper iframe {
@@ -20,8 +27,11 @@
 
 @media (max-width: 600px) {
     .chart__wrapper iframe {
-        position: relative;
-        left: -2%;
-        transform: scale(0.95);
+        transform: scale(0.9);
     }
+
+    .chart__wrapper h3 { 
+        font-size: 35px;
+    }
+
   }
