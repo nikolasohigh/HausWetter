@@ -35,3 +35,34 @@
     }
 
   }
+
+select {
+    margin-top: -20px;
+    margin-bottom: 20px;
+    width: 250px;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    outline: none;
+}
+
+input {
+
+    height: 26px;
+    width: 300px;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    outline: none;
+}
+
+
+.end, .start {
+    width: 446px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.end h3, .start h3 {
+    font-size: 26px;
+    margin: 20px 0;
+}

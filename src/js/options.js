@@ -23,7 +23,9 @@ modalExit.innerHTML = `
         localStorage.clear();
         location.reload(true);
     ">Так</button>
-    <button onclick="hideExitModal()">Hi</button>
+    <button onclick="
+        modalExit.style.bottom = '-140px';
+    ">Hi</button>
 </div>`;
     
 logoutButton.addEventListener('click', () => {

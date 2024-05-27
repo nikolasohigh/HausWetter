@@ -13,9 +13,7 @@ export function showLoginForm() {
     loginForm.appendChild(welcomeButton);
 }
 
-export function hideExitModal() {
-    modalExit.style.bottom = '-140px';
-}
+
 
 export function exit() {
     localStorage.clear();
@@ -58,3 +56,4 @@ export function saveOptions(key, obj) {
     localStorage.setItem(`${key}`, JSON.stringify(obj));
   }
   
+ 
